@@ -196,3 +196,51 @@
         font-size: 26px;
     }
 }
+
+
+.hotel-filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.hotel-filters input {
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background-color: #fff;
+}
+
+.hotel-filters input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.hotel-filters input:first-child {
+  flex: 2;
+  min-width: 220px;
+}
+
+.hotel-filters input:not(:first-child) {
+  flex: 1;
+  min-width: 150px;
+}
+
+.no-hotels {
+  color: #64748b;
+  font-size: 16px;
+  padding: 20px 0;
+}
+
+@media (max-width: 600px) {
+  .hotel-filters {
+    flex-direction: column;
+  }
+
+  .hotel-filters input {
+    width: 100%;
+  }
+}
