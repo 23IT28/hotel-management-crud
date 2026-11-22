@@ -1,6 +1,7 @@
 import "./App.css";
 import AddHotel from "./pages/AddHotel";
 import EditHotel from "./pages/EditHotel";
+import HotelDetails from "./pages/HotelDetails";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import HotelList from "./pages/HotelList";
@@ -30,6 +31,11 @@ function App() {
                 element={<EditHotel />} 
                 />
 
+                <Route 
+                path="/hotels/:id" 
+                element={<HotelDetails />} 
+                />
+                
             </Routes>
         </BrowserRouter>
     );

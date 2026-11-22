@@ -27,6 +27,11 @@ function HotelList() {
   const [selectedHotelId, setSelectedHotelId] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
 
+  // View hotel details
+  const handleView = (id) => {
+    navigate(`/hotels/${id}`);
+  };
+
   // Search and price filter
   const filteredHotels = hotels.filter((hotel) => {
     const matchesSearch = hotel.title
@@ -147,6 +152,7 @@ function HotelList() {
               <HotelCard
                 key={hotel.id}
                 hotel={hotel}
+                onView={handleView}
                 onEdit={handleEdit}
                 onDelete={handleDelete}
               />
