@@ -1,14 +1,19 @@
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import Navbar from "../components/Navbar";
 import HotelCard from "../components/HotelCard";
+import { deleteHotel } from "../redux/hotelSlice";
 
 function HotelList() {
   const hotels = useSelector((state) => state.hotels.hotels);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Search states
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -16,6 +21,11 @@ function HotelList() {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 2;
+
+  // Delete popup states
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedHotelId, setSelectedHotelId] = useState(null);
+  const [successMessage, setSuccessMessage] = useState("");
 
   // Search and price filter
   const filteredHotels = hotels.filter((hotel) => {
@@ -44,7 +54,7 @@ function HotelList() {
     startIndex + itemsPerPage
   );
 
-  // Reset page when filters change
+  // Search handlers
   const handleSearch = (value) => {
     setSearchTerm(value);
     setCurrentPage(1);
@@ -60,13 +70,42 @@ function HotelList() {
     setCurrentPage(1);
   };
 
-  // Navigate to Edit Hotel page
+  // Edit hotel
   const handleEdit = (id) => {
     navigate(`/hotels/edit/${id}`);
   };
 
+  // Open delete confirmation popup
   const handleDelete = (id) => {
-    console.log("Delete Hotel ID:", id);
+    setSelectedHotelId(id);
+    setShowDeleteModal(true);
+  };
+
+  // Confirm hotel deletion
+  const confirmDelete = () => {
+    const remainingHotels = filteredHotels.filter(
+      (hotel) => hotel.id !== selectedHotelId
+    );
+
+    const newTotalPages = Math.ceil(
+      remainingHotels.length / itemsPerPage
+    );
+
+    dispatch(deleteHotel(selectedHotelId));
+
+    if (currentPage > newTotalPages) {
+      setCurrentPage(Math.max(1, newTotalPages));
+    }
+
+    setShowDeleteModal(false);
+    setSelectedHotelId(null);
+    setSuccessMessage("Hotel deleted successfully!");
+  };
+
+  // Cancel deletion
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setSelectedHotelId(null);
   };
 
   return (
@@ -77,6 +116,7 @@ function HotelList() {
         <h1>Our Hotels</h1>
         <p>Explore our available hotels</p>
 
+        {/* Search and Price Filters */}
         <div className="hotel-filters">
           <input
             type="text"
@@ -100,6 +140,7 @@ function HotelList() {
           />
         </div>
 
+        {/* Hotel Cards */}
         <div className="hotel-grid">
           {currentHotels.length > 0 ? (
             currentHotels.map((hotel) => (
@@ -145,6 +186,47 @@ function HotelList() {
               disabled={currentPage === totalPages}
             >
               Next
+            </button>
+          </div>
+        )}
+
+        {/* Delete Confirmation Popup */}
+        {showDeleteModal && (
+          <div className="modal-overlay">
+            <div className="confirmation-modal">
+              <h2>Delete Hotel?</h2>
+
+              <p>
+                Are you sure you want to delete this hotel?
+                This action cannot be undone.
+              </p>
+
+              <div className="modal-actions">
+                <button
+                  onClick={cancelDelete}
+                  className="cancel-btn"
+                >
+                  Cancel
+                </button>
+
+                <button
+                  onClick={confirmDelete}
+                  className="confirm-delete-btn"
+                >
+                  Yes, Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Success Message */}
+        {successMessage && (
+          <div className="success-message">
+            <span>{successMessage}</span>
+
+            <button onClick={() => setSuccessMessage("")}>
+              ×
             </button>
           </div>
         )}
