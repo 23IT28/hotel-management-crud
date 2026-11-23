@@ -1,9 +1,9 @@
-
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { updateHotel } from "../redux/hotelSlice";
 import Navbar from "../components/Navbar";
 import HotelForm from "../components/HotelForm";
+import { Helmet } from "react-helmet-async";
 
 function EditHotel() {
   const { id } = useParams();
@@ -30,6 +30,19 @@ function EditHotel() {
     return (
       <>
         <Navbar />
+        <Helmet>
+            <title>
+                {hotel ? `Edit ${hotel.title} | StayComfo` : "Edit Hotel | StayComfo"}
+            </title>
+            <meta
+                name="description"
+                content={
+                    hotel
+                        ? `Update details, price and location of ${hotel.title}.`
+                        : "Edit hotel information on StayComfo."
+                }
+            />
+        </Helmet>
         <div className="form-page-container">
           <h2>Hotel not found</h2>
         </div>

@@ -1,11 +1,10 @@
-
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 import Navbar from "../components/Navbar";
 import HotelCard from "../components/HotelCard";
 import { deleteHotel } from "../redux/hotelSlice";
+import { Helmet } from "react-helmet-async";
 
 function HotelList() {
   const hotels = useSelector((state) => state.hotels.hotels);
@@ -20,7 +19,7 @@ function HotelList() {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 2;
+  const itemsPerPage = 3;
 
   // Delete popup states
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -115,6 +114,13 @@ function HotelList() {
 
   return (
     <div className="hotel-list-page">
+        <Helmet>
+            <title>StayComfo | Explore Hotels</title>
+            <meta
+                name="description"
+                content="Explore hotels, compare prices, and discover your perfect stay with StayComfo."
+            />
+        </Helmet>
       <Navbar />
 
       <div className="hotel-list-container">

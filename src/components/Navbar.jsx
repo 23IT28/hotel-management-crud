@@ -6,7 +6,7 @@ function Navbar() {
     return (
         <nav className="navbar">
             <Link to="/hotels" className="navbar-logo">
-                HotelHub
+                StayComfo
             </Link>
 
             <div className="navbar-links">

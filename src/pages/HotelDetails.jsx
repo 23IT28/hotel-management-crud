@@ -1,7 +1,8 @@
-
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { Helmet } from "react-helmet-async";
+import RoomTypes from "../components/RoomTypes";
 
 import {
   MapContainer,
@@ -22,12 +23,23 @@ function HotelDetails() {
     )
   );
 
+  // Handle invalid hotel ID
   if (!hotel) {
     return (
       <>
+        <Helmet>
+          <title>Hotel Not Found | StayComfo</title>
+          <meta
+            name="description"
+            content="The requested hotel could not be found."
+          />
+        </Helmet>
+
         <Navbar />
+
         <div className="details-container">
           <h2>Hotel not found</h2>
+
           <button onClick={() => navigate("/hotels")}>
             Back to Hotels
           </button>
@@ -38,9 +50,37 @@ function HotelDetails() {
 
   return (
     <div className="hotel-list-page">
+
+      {/* SEO Meta Tags */}
+      <Helmet>
+        <title>{hotel.title} | StayComfo</title>
+
+        <meta
+          name="description"
+          content={`${hotel.title} - ${hotel.description}`}
+        />
+
+        <meta
+          property="og:title"
+          content={`${hotel.title} | StayComfo`}
+        />
+
+        <meta
+          property="og:description"
+          content={hotel.description}
+        />
+
+        <meta
+          property="og:image"
+          content={hotel.image}
+        />
+      </Helmet>
+
       <Navbar />
 
       <div className="details-container">
+
+        {/* Back Button */}
         <button
           className="back-btn"
           onClick={() => navigate("/hotels")}
@@ -48,6 +88,7 @@ function HotelDetails() {
           ← Back to Hotels
         </button>
 
+        {/* Hotel Information */}
         <div className="hotel-details-card">
           <img
             src={hotel.image}
@@ -74,11 +115,18 @@ function HotelDetails() {
           </div>
         </div>
 
+        {/* Available Room Types */}
+        <RoomTypes rooms={hotel.rooms} />
+
+        {/* Hotel Location and Map */}
         <div className="map-section">
           <h2>Hotel Location</h2>
 
           <MapContainer
-            center={[Number(hotel.latitude), Number(hotel.longitude)]}
+            center={[
+              Number(hotel.latitude),
+              Number(hotel.longitude),
+            ]}
             zoom={13}
             scrollWheelZoom={true}
             className="hotel-map"
@@ -105,6 +153,7 @@ function HotelDetails() {
             </CircleMarker>
           </MapContainer>
         </div>
+
       </div>
     </div>
   );

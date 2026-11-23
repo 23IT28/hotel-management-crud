@@ -11,13 +11,9 @@ const hotelSlice = createSlice({
     initialState,
 
     reducers: {
-
-        // Add Hotel
         addHotel: (state, action) => {
             state.hotels.push(action.payload);
         },
-
-        // Update Hotel
         updateHotel: (state, action) => {
             const index = state.hotels.findIndex(
                 hotel => hotel.id === action.payload.id
@@ -27,8 +23,6 @@ const hotelSlice = createSlice({
                 state.hotels[index] = action.payload;
             }
         },
-
-        // Delete Hotel
         deleteHotel: (state, action) => {
             state.hotels = state.hotels.filter(
                 hotel => hotel.id !== action.payload

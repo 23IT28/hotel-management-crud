@@ -1,4 +1,3 @@
-
 function HotelCard({ hotel, onEdit, onDelete, onView }) {
   return (
     <div className="hotel-card">
