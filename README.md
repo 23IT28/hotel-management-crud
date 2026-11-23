@@ -26,45 +26,60 @@ The application uses dummy hotel data with Redux Toolkit for state management an
 
 ## Technology Stack
 
-Frontend = React.js, HTML5, CSS3, JavaScript 
-Build Tool = Vite 
-State Management = Redux Toolkit, React Redux 
-Routing = React Router DOM 
-SEO = React Helmet Async 
-Maps = Leaflet, React Leaflet, OpenStreetMap 
-Data Persistence = Browser localStorage 
+## Tech Stack
+
+**Frontend**
+- React.js
+- HTML5
+- CSS3
+- JavaScript (ES6+)
+
+**Build Tool**
+- Vite
+
+**State Management**
+- Redux Toolkit
+- React Redux
+
+**Routing**
+- React Router DOM
+
+**SEO**
+- React Helmet Async
+
+**Maps & Location**
+- Leaflet
+- React Leaflet
+- OpenStreetMap
+
+**Data Persistence**
+- Browser localStorage
 
 ## Project Structure
 
+```text
 StayComfo/
-│
 ├── public/
 │   └── images/
-│
 ├── src/
 │   ├── components/
 │   │   ├── Navbar.jsx
 │   │   ├── HotelCard.jsx
 │   │   └── HotelForm.jsx
-│   │
 │   ├── data/
 │   │   └── hotels.js
-│   │
 │   ├── pages/
 │   │   ├── HotelList.jsx
 │   │   ├── AddHotel.jsx
 │   │   ├── EditHotel.jsx
 │   │   └── HotelDetails.jsx
-│   │
 │   ├── redux/
 │   │   ├── hotelSlice.js
 │   │   └── store.js
-│   │
 │   ├── App.jsx
 │   ├── App.css
 │   ├── index.css
 │   └── main.jsx
-│
 ├── package.json
 └── README.md
 ```
